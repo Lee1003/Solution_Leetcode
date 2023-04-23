@@ -447,27 +447,13 @@ public class Week4 {
         if (newList.size() == 1) {
             return newList.get(0);
         }
-
-        String old = newList.get(0);
         //如果newList里面不止一个元素，则输出字母序最小的字符串
-        for (int i = 0; i < newList.get(0).length(); i++) {
-            for (int j = 0; j < newList.size() - 1; j++) {
-                for (int k = j + 1; k < newList.size(); k++) {
-                    String str1 = newList.get(j);
-                    String str2 = newList.get(k);
-                    char c1 = str1.charAt(i);
-                    char c2 = str2.charAt(i);
-                    if (c1 > c2) {
-                        newList.set(j, str2);
-                        newList.set(k, str1);
-                    }
-                }
-            }
-            if (i == 1 && newList.get(0).equals(old)) {
-                break;
-            }
-            if (!newList.get(0).equals(old)) {
-                break;
+        for (int i = 1; i < newList.size(); i++) {
+            String str1 = newList.get(0);
+            String str2 = newList.get(i);
+            if (str1.compareTo(str2) > 0) {
+                newList.set(0, str2);
+                newList.set(i, str1);
             }
         }
         //newList中第一个元素就是字典序最小的，直接返回
