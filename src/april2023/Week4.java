@@ -362,7 +362,7 @@ public class Week4 {
     }
 
 
-
+    //443.压缩字符串
     public static int compress(char[] chars) {
         int n = chars.length;
         int write = 0, left = 0;
@@ -388,7 +388,7 @@ public class Week4 {
         return write;
     }
 
-    //443.压缩字符串
+
     public static void reverse(char[] cs, int left, int right) {
         while (left < right) {
             char temp = cs[left];
