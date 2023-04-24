@@ -504,40 +504,6 @@ public class Week4 {
         return ans.reverse().toString();
     }
 
-    //1163. 按字典序排在最后的子串
-    //TODO 超时待优化
-    public String lastSubstring(String s) {
-        //遍历s,找到字母表靠后的字母，记录其下标，加入一个list
-        //如果只有一个，直接返回subString（下标）
-        //如果有很多个，新建一个strList，把所有对应下表的subString（下标）都放进去
-        //从第二个开始循环，如果循环到的元素的字母序比第一个大，交换
-        //循环完成后保证strList第一个元素的字母序是最大的，直接返回
-        int maxAsc = 0;
-        for (int i = 0; i < s.length(); i++) {
-            maxAsc = Math.max(s.charAt(i), maxAsc);
-        }
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == maxAsc) {
-                list.add(i);
-            }
-        }
-        if (list.size() == 1) {
-            return s.substring(list.get(0));
-        }
-        List<String> strList = new ArrayList<>();
-        for (int i : list) {
-            strList.add(s.substring(i));
-        }
-        for (int i = 1; i < strList.size(); i++) {
-            if (strList.get(0).compareTo(strList.get(i)) < 0) {
-                strList.set(0, strList.get(i));
-                strList.set(i, strList.get(0));
-            }
-        }
-        return strList.get(0);
-    }
-
 
     //28. 找出字符串中第一个匹配项的下标
     //TODO 了解TMP算法
