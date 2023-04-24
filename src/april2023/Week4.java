@@ -377,18 +377,13 @@ public class Week4 {
                         chars[write++] = (char) (num % 10 + '0');
                         num /= 10;
                     }
-
                     reverse(chars, anchor, write - 1);
-
                 }
                 left = read + 1;
             }
-
         }
         return write;
     }
-
-
     public static void reverse(char[] cs, int left, int right) {
         while (left < right) {
             char temp = cs[left];
@@ -613,8 +608,280 @@ public class Week4 {
     }
 
 
+    //467. 环绕字符串中唯一的子字符串
+    public int findSubstringInWraproundString(String s) {
+        int[] dp = new int[26];
+        int k = 0;
+        for(int i = 0; i < s.length(); i++){
+            if(i > 0 && (s.charAt(i) - s.charAt(i - 1) + 26) % 26 == 1){
+                k++;
+            }else{
+                k = 1;
+            }
+            //更新dp
+            dp[s.charAt(i) - 'a'] = Math.max(dp[s.charAt(i) - 'a'], k);
+        }
+        int sum = 0;
+        for(int i : dp){
+            sum += i;
+        }
+
+        return sum;
+    }
 
 
+    //8. 字符串转换整数 (atoi)
+    public int myAtoi(String s) {
+        int index = 0;
+        char[] cs = s.toCharArray();
+        int n = cs.length;
+        while (index < cs.length && cs[index] == ' ') {
+            index++;
+        }
+        if (index == n) {
+            return 0;
+        }
+
+        boolean sign = true;
+        if (cs[index] == '-') {
+            sign = false;
+            index++;
+        } else if (cs[index] == '+') {
+            index++;
+        } else if (!Character.isDigit(cs[index])) {
+            return 0;
+        }
+
+        int ans = 0;
+        while (index < n && Character.isDigit(cs[index])) {
+            int digit = cs[index] - '0';
+            if (ans > (Integer.MAX_VALUE - digit) / 10) {
+                return sign ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+            ans = ans * 10 + digit;
+            index++;
+        }
+        return sign ? ans : -ans;
+    }
+
+    //165. 比较版本号
+    public int compareVersion(String version1, String version2) {
+        String[] strs1 = version1.split("\\.");
+        String[] strs2 = version2.split("\\.");
+        int m = strs1.length;
+        int n = strs2.length;
+        for (int i = 0; i < Math.min(m, n); i++) {
+            int i1 = Integer.parseInt(strs1[i]);
+            int i2 = Integer.parseInt(strs2[i]);
+            if (i1 < i2) {
+                return -1;
+            } else if (i1 > i2) {
+                return 1;
+            }
+        }
+        if (m > n) {
+            for (int i = n; i < m; i++) {
+                if (Integer.parseInt(strs1[i]) > 0) {
+                    return 1;
+                }
+            }
+        } else if (m < n) {
+            for (int i = m; i < n; i++) {
+                if (Integer.parseInt(strs2[i]) > 0) {
+                    return -1;
+                }
+            }
+        }
+        return 0;
+    }
+
+    //481. 神奇字符串
+    public int magicalString(int n) {
+        StringBuilder magic = new StringBuilder();
+        magic.append("122");
+        int index = 2;
+        boolean b = false;
+        while (magic.length() < n) {
+            if (magic.toString().charAt(index) == '2') {
+                if (!b) {
+                    magic.append("11");
+                } else {
+                    magic.append("22");
+                }
+            } else {
+                if (!b) {
+                    magic.append("1");
+                } else {
+                    magic.append("2");
+                }
+            }
+            index++;
+            b = !b;
+        }
+        int count = 0;
+        String str = magic.toString();
+        for (int i = 0; i < n; i++) {
+            if (str.charAt(i) == '1') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    //522. 最长特殊序列 II
+    public int findLUSlength(String[] strs) {
+        Set<String> set1 = new HashSet<>();
+        Set<String> set2 = new HashSet<>();
+        for (int i = 0; i < strs.length - 1; i++) {
+            for (int j = i + 1; j < strs.length; j++) {
+                if (!strs[i].equals(strs[j])) {
+                    if (strs[i].length() > strs[j].length()) {
+                        if (isSubsequence(strs[j], strs[i])) {
+                            set1.add(strs[i]);
+                            set2.add(strs[j]);
+                        } else {
+                            set1.add(strs[i]);
+                            set1.add(strs[j]);
+                        }
+                    } else if (strs[i].length() < strs[j].length()) {
+                        if (isSubsequence(strs[i], strs[j])) {
+                            set1.add(strs[j]);
+                            set2.add(strs[i]);
+                        } else {
+                            set1.add(strs[i]);
+                            set1.add(strs[j]);
+                        }
+                    } else {
+                        set1.add(strs[j]);
+                        set1.add(strs[i]);
+                    }
+                } else {
+                    set2.add(strs[i]);
+                }
+            }
+        }
+        set1.removeIf(set2::contains);
+        if (set1.size() == 0) {
+            return -1;
+        }
+        int maxLen = 0;
+        for (String str : set1) {
+            maxLen = Math.max(maxLen, str.length());
+        }
+        return maxLen;
+    }
+
+    //66. 加一
+    public int[] plusOne(int[] digits) {
+        int n = digits.length;
+        for (int i = n - 1; i >= 0; i--) {
+            if (digits[i] + 1 < 10) {
+                digits[i]++;
+                return digits;
+            } else {
+                digits[i] = 0;
+            }
+        }
+        int[] nums = new int[n + 1];
+        nums[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] = 0;
+        }
+        return nums;
+    }
+
+    //67. 二进制求和
+    public String addBinary(String a, String b) {
+        //判断字符串a和b的长短，把短的那一段前面用0补齐，此时两个字符串一样长
+        //用一个StringBuilder ans记录答案
+        //从后往前遍历两个字符串，如果相加为1或者0,ans.append(1) ans.append(0)
+        //如果相加为2，ans.append(0) 且前面要进位，用一个boolean变量表示是否进位，如果进位则为true
+        //如果boolean为true，则对应位置两个字符串相加的时候要再加上1
+        //reverse StringBuilder即为答案
+        int m = a.length();
+        int n = b.length();
+        if (m > n) {
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < m - n; i++) {
+                s.append(0);
+            }
+            s.append(b);
+            b = s.toString();
+        }
+        if (m < n) {
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < n - m; i++) {
+                s.append(0);
+            }
+            s.append(a);
+            a = s.toString();
+        }
+        StringBuilder ans = new StringBuilder();
+        boolean is = false;
+        for (int i = a.length() - 1; i >= 0; i--) {
+            int num1 = a.charAt(i) - 48;
+            int num2 = b.charAt(i) - 48;
+            int num3 = !is ? 0 : 1;
+            int res = num1 + num2 + num3;
+            if (res == 0 || res == 1) {
+                ans.append(res);
+                is = false;
+            } else if (res == 2) {
+                ans.append(0);
+                is = true;
+            } else {
+                ans.append(1);
+                is = true;
+            }
+        }
+        if (is) {
+            ans.append(1);
+        }
+        return ans.reverse().toString();
+    }
+
+
+    //415. 字符串相加
+    public String addStrings(String num1, String num2) {
+        int m = num1.length();
+        int n = num2.length();
+        if (m > n) {
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < m - n; i++) {
+                s.append(0);
+            }
+            s.append(num2);
+            num2 = s.toString();
+        }
+
+        if (m < n) {
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < n - m; i++) {
+                s.append(0);
+            }
+            s.append(num1);
+            num1 = s.toString();
+        }
+        StringBuilder ans = new StringBuilder();
+        boolean carry = false;
+        for (int i = num1.length() - 1; i >= 0; i--) {
+            int i1 = num1.charAt(i) - 48;
+            int i2 = num2.charAt(i) - 48;
+            int i3 = carry ? 1 : 0;
+            int res = i1 + i2 + i3;
+            if (res <= 9) {
+                ans.append(res);
+                carry = false;
+            } else {
+                ans.append(res - 10);
+                carry = true;
+            }
+        }
+        if (carry) {
+            ans.append(1);
+        }
+        return ans.reverse().toString();
+    }
 
 
     public static void main(String[] args) {
