@@ -60,13 +60,12 @@ public class Week5 {
             currLen = Math.max(oddLen, evenLen);
             if (currLen > maxLen) {
                 maxLen = currLen;
-                begin = i - (maxLen - 1) / 2; //begin要在智商推演一下
+                begin = i - (maxLen - 1) / 2; //begin要在纸上推演一下
             }
         }
         return s.substring(begin, begin + maxLen);
 
     }
-
     public static int expandAroundCenter(String s, int left, int right) {
         //奇数 left = right， 偶数 left = right - 1 同时处理了奇偶两种情况
         while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
@@ -75,6 +74,28 @@ public class Week5 {
         }
         return right - left - 1;
     }
+
+    //647. 回文子串
+    public int countSubstrings(String s) {
+        //思路与第五题相同
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int oddCount = expandAroundCenterCount(s, i, i);
+            int evenCount = expandAroundCenterCount(s, i, i + 1);
+            count  = count + oddCount + evenCount;
+        }
+        return count;
+    }
+    public static int expandAroundCenterCount(String s, int left, int right) {
+        int count = 0;
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+
 
 
     public static void main(String[] args) {
