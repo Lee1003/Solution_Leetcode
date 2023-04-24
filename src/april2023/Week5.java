@@ -1,5 +1,9 @@
 package april2023;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Week5 {
 
     //1163. 按字典序排在最后的子串
@@ -94,6 +98,25 @@ public class Week5 {
             right++;
         }
         return count;
+    }
+
+    //2418. 按身高排序
+    public String[] sortPeople(String[] names, int[] heights) {
+        //height[]所有元素互不相同，用一个map key存放height(互不相同保证key不会重复)
+        //value 存放对应的坐标i, 给heights[]排倒序
+        //遍历排倒序后的heights[]，找到每一个key对应的下标，下标对应到names[]就是对应的人名
+        //新开一个res[]数组存放结果，返回res
+        Map<Integer, Integer> map = new HashMap<>();
+        int n = names.length;
+        for (int i = 0; i < n; i++) {
+            map.put(heights[i], i);
+        }
+        Arrays.sort(heights);
+        String[] ans = new String[n];
+        for (int i = 0; i < names.length; i++) {
+            ans[i] = names[map.get(heights[n - i - 1])];
+        }
+        return ans;
     }
 
 
