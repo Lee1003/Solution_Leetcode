@@ -41,4 +41,44 @@ public class Week5 {
         //最终的pos后缀字符串就是字典序最大的子串，直接返回subString(pos)
         return s.substring(pos);
     }
+
+
+    //5. 最长回文子串
+    public static String longestPalindrome(String s) {
+        //特殊判断，如果s为空或者s长度为1，直接返回s
+        if (s.equals("") || s.length() == 1) {
+            return s;
+        }
+        //中心扩展法-枚举每一个可能的中心，向两边扩展
+        int maxLen = 0;
+        int begin = 0;
+        for (int i = 0; i < s.length() - 1; i++) {
+            int currLen = 0;
+            //分别计算奇偶中心扩展回文串最大长度
+            int oddLen = expandAroundCenter(s, i, i);
+            int evenLen = expandAroundCenter(s, i, i + 1);
+            currLen = Math.max(oddLen, evenLen);
+            if (currLen > maxLen) {
+                maxLen = currLen;
+                begin = i - (maxLen - 1) / 2; //begin要在智商推演一下
+            }
+        }
+        return s.substring(begin, begin + maxLen);
+
+    }
+
+    public static int expandAroundCenter(String s, int left, int right) {
+        //奇数 left = right， 偶数 left = right - 1 同时处理了奇偶两种情况
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
+
+    public static void main(String[] args) {
+        String str = "babad";
+        System.out.println(longestPalindrome(str));
+    }
 }

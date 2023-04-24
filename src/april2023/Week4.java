@@ -506,7 +506,7 @@ public class Week4 {
 
 
     //28. 找出字符串中第一个匹配项的下标
-    //TODO 了解TMP算法
+    //TODO 了解KMP算法
     public static int strStr(String haystack, String needle) {
         //遍历haystack，从第一个字符开始，截取长度等于needle的字符串
         //如果截取的字符串equals needle 直接返回i
