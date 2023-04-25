@@ -211,10 +211,50 @@ public class Week5 {
     }
 
 
+    //461. 汉明距离
+    //TODO 优化
+    public static int hammingDistance(int x, int y) {
+        String s1 = toBinary(x);
+        String s2 = toBinary(y);
+        int m = s1.length();
+        int n = s2.length();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < Math.abs(m - n); i++) {
+            sb.append(0);
+        }
+        sb.append(m < n ? s1 : s2);
+        if (m < n) {
+            s1 = sb.toString();
+        } else {
+            s2 = sb.toString();
+        }
+        int count = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i)) {
+                count++;
+            }
+        }
+        return count;
+
+    }
+    public static String toBinary(int i) {
+        if (i == 0) {
+            return "0";
+        }
+        StringBuilder ans = new StringBuilder();
+        int remainder = i / 2;
+        while (i / 2 > 0) {
+            ans.append(i % 2);
+            i /= 2;
+        }
+        ans.append(1);
+        return ans.reverse().toString();
+    }
+
+
 
 
     public static void main(String[] args) {
-        String str = "ababa";
-        System.out.println(repeatedSubstringPattern(str));
+        System.out.println(toBinary(0));
     }
 }
