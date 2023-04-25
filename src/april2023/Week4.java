@@ -500,28 +500,6 @@ public class Week4 {
     }
 
 
-    //686. 重复叠加字符串匹配
-    //TODO 超时
-    public int repeatedStringMatch(String a, String b) {
-        //循环 0至(b / a + 1) * 2 次
-        //判断循环后，b是否为a叠加的子串，如果是返回次数
-        if (isSubString(b, a)) {
-            return 0;
-        }
-        int times = (b.length() / a.length() + 1) * 2;
-        for (int i = 1; i <= times; i++) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(a);
-            for (int j = 1; j <= i; j++) {
-                sb.append(a);
-            }
-            if (isSubString(b, sb.toString())) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public static boolean isSubString(String a, String b) {
         //判断a是否为b的子串
         int len = a.length();

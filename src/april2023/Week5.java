@@ -183,13 +183,38 @@ public class Week5 {
 
 
 
+    //686. 重复叠加字符串匹配
+    //TODO 超时
+    public int repeatedStringMatch(String a, String b) {
+        return 1;
+    }
+
+
+    //459. 重复的子字符串
+    public static boolean repeatedSubstringPattern(String s) {
+        //枚举前缀，如果s长度除前缀长度等于0，且前缀乘商等于原字符串s，返回true
+        //至少重复两次，前缀只要遍历到中间就行了
+        int len = s.length();
+        for (int i = 0; i < len / 2; i++) {
+            String prefix = s.substring(0, i + 1);
+            if (len % prefix.length() == 0) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < len / prefix.length(); j++) {
+                    sb.append(prefix);
+                }
+                if (sb.toString().equals(s)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 
 
     public static void main(String[] args) {
-        String str = "abacabab";
-        int[] next = buildNext(str);
-        for (int i : next) {
-            System.out.print(i);
-        }
+        String str = "ababa";
+        System.out.println(repeatedSubstringPattern(str));
     }
 }
