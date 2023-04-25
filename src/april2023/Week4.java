@@ -500,26 +500,6 @@ public class Week4 {
     }
 
 
-    //28. 找出字符串中第一个匹配项的下标
-    //TODO 了解KMP算法
-    public static int strStr(String haystack, String needle) {
-        //遍历haystack，从第一个字符开始，截取长度等于needle的字符串
-        //如果截取的字符串equals needle 直接返回i
-        //最后返回-1， 表示没有符合的子串
-        int len = needle.length();
-        for (int i = 0; i < haystack.length(); i++) {
-            if (haystack.substring(i).length() < len) {
-                break;
-            }
-            String str = haystack.substring(i, i + len);
-            if (str.equals(needle)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-
     //686. 重复叠加字符串匹配
     //TODO 超时
     public int repeatedStringMatch(String a, String b) {

@@ -120,9 +120,76 @@ public class Week5 {
     }
 
 
+    //28. 找出字符串中第一个匹配项的下标
+    //TODO 了解KMP算法
+    public static int strStr(String haystack, String needle) {
+        //遍历haystack，从第一个字符开始，截取长度等于needle的字符串
+        //如果截取的字符串equals needle 直接返回i
+        //最后返回-1， 表示没有符合的子串
+//        int len = needle.length();
+//        for (int i = 0; i < haystack.length(); i++) {
+//            if (haystack.substring(i).length() < len) {
+//                break;
+//            }
+//            String str = haystack.substring(i, i + len);
+//            if (str.equals(needle)) {
+//                return i;
+//            }
+//        }
+//        return -1;
+
+        //KMP算法
+        int[] next = buildNext(needle);
+        int i = 0, j = 0;
+        while (i < haystack.length()) {
+            if (haystack.charAt(i) == needle.charAt(j)) { //字符匹配，指针后移
+                i++;
+                j++;
+            } else if (j > 0) { //不匹配，根据next跳过pattern串前面的一些字符
+                j = next[j - 1];
+            } else { //pattern串第一个字符就不匹配
+                i++;
+            }
+
+            if (j == needle.length()) { //匹配成功，返回坐标
+                return i - j;
+            }
+        }
+        return -1;
+    }
+
+    public static int[] buildNext(String pattern) {
+        int n = pattern.length();
+        int[] next = new int[n];
+        next[0] = 0;
+        int prefix_len = 0;
+        int i = 1;
+        while (i < n) {
+            if (pattern.charAt(prefix_len) == pattern.charAt(i)) {
+                prefix_len++;
+                next[i] = prefix_len;
+                i++;
+            } else {
+                if (prefix_len == 0) {
+                    next[i] = 0;
+                    i++;
+                } else {
+                    prefix_len = next[prefix_len - 1];
+                }
+            }
+        }
+        return next;
+    }
+
+
+
+
 
     public static void main(String[] args) {
-        String str = "babad";
-        System.out.println(longestPalindrome(str));
+        String str = "abacabab";
+        int[] next = buildNext(str);
+        for (int i : next) {
+            System.out.print(i);
+        }
     }
 }
