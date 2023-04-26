@@ -317,6 +317,28 @@ public class Week5 {
     }
 
 
+    //713. 乘积小于 K 的子数组
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        //nums数组元素都是正数，肯定越乘越大，固定右端点，计算sum，枚举左端点
+        if (k == 0 || k == 1) {
+            return 0;
+        }
+        int n = nums.length;
+        int count = 0;
+        int prod = 1;
+        int left = 0;
+        for (int right = 0; right < n; right++) {
+            prod *= nums[right];
+            while (prod >= k) {
+                prod /= nums[left];
+                left++;
+            }
+            count += right - left + 1;
+        }
+        return count;
+    }
+
+
 
 
 
