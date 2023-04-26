@@ -288,6 +288,35 @@ public class Week5 {
     }
 
 
+    //209. 长度最小的子数组
+    public int minSubArrayLen(int target, int[] nums) {
+        //双指针，滑动窗口
+        //固定right先计算sum
+        //枚举left，如果sum>=target，移动左端点，直到不符合条件位置
+        //sum减去左端点，同时向右移动左指针
+        int n = nums.length;
+        int sum = 0;
+        int left = 0;
+        int ans = n + 1;
+        for (int right = 0; right < n; right++) {
+            sum += nums[right];
+//            while (sum - nums[left] >= target) {
+//                sum -= nums[left];
+//                left++;
+//            }
+//            if (sum >= target) {
+//                ans = Math.min(ans, right - left + 1);
+//            }
+            while (sum >= target) {
+                ans = Math.min(ans, right - left + 1);
+                sum -= nums[left];
+                left++;
+            }
+        }
+        return ans <= n ? ans : 0;
+    }
+
+
 
 
 
