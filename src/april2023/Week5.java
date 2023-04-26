@@ -184,9 +184,21 @@ public class Week5 {
 
 
     //686. 重复叠加字符串匹配
-    //TODO 超时
     public int repeatedStringMatch(String a, String b) {
-        return 1;
+        StringBuilder sb = new StringBuilder();
+        int ans = 0;
+        //下界c1：复制过后的长度必须要大于b，上界c2 = c1 + 1
+        while (sb.length() < b.length()) {
+            ans++;
+            sb.append(a);
+        }
+        sb.append(a);
+        int index = strStr(sb.toString(), b);
+        if (index == -1) {
+            return -1;
+        }
+        //index + b.length() 为匹配成功后的结束位置，如果结束位置超过了n * c1，那么返回上界ans+1，否则返回下界ans
+        return index + b.length() > a.length() * ans ? ans + 1 : ans;
     }
 
 
