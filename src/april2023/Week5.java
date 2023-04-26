@@ -371,8 +371,35 @@ public class Week5 {
         return i == m;
     }
 
+    //3. 无重复字符的最长子串
+    public static int lengthOfLongestSubstring(String s) {
+        //枚举右端点，如果加入的右端点后，这个字符有重复，则向右移动左端点，直到没有重复的字符为止
+        int n = s.length();
+        int ans = 0;
+        int left = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int right = 0; right < n; right++) {
+            map.put(s.charAt(right), map.getOrDefault(s.charAt(right), 0) + 1);
+            while (map.get(s.charAt(right)) > 1) {
+                map.put(s.charAt(left), map.get(s.charAt(left)) - 1);
+                left++;
+            }
+            ans = Math.max(ans, right - left + 1);
+        }
+        return ans;
+    }
+
+
+
 
     public static void main(String[] args) {
+        Set<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(2);
+        set.add(3);
 
+
+        set.remove(2);
+        System.out.println(set);
     }
 }
