@@ -252,6 +252,32 @@ public class Week5 {
     }
 
 
+    //1031. 两个非重叠子数组的最大和
+    public int maxSumTwoNoOverlap(int[] nums, int firstLen, int secondLen) {
+        //枚举长度为secondLen的数组b的同时，用maxSumA维护长度为firstLen的数组的最大值
+        //用前缀和数组加速计算
+        //b开始的下标 firstLen+secondLen， 下标范围[i-secondLen,i)
+        //每一次循环都更新maxSumA s[i-secondLen] - s[i-secondLen-firstLen]
+        int n = nums.length;
+        int[] s  = new int[n + 1]; //前缀和数组
+        for (int i = 0; i < s.length; i++) {
+            s[i + 1] = s[i] + nums[i];
+        }
+        return Math.max(f(s, firstLen, secondLen), f(s, secondLen, firstLen));
+    }
+
+    public static int f(int[] s, int firstLen, int secondLen) {
+        int maxSumA = 0, res = 0;
+        for (int i = firstLen + secondLen; i < s.length; i++) {
+            maxSumA = Math.max(maxSumA, s[i - secondLen] - s[i - secondLen - firstLen]);
+            res = Math.max(res, maxSumA + s[i] - s[i - secondLen]);
+        }
+        return res;
+    }
+
+
+
+
 
 
     public static void main(String[] args) {
