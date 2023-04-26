@@ -1,8 +1,6 @@
 package april2023;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Week5 {
 
@@ -338,12 +336,43 @@ public class Week5 {
         return count;
     }
 
+    //1048. 最长字符串链
+    public int longestStrChain(String[] words) {
+        //将words数组中的单词按照长度从短到长排序
+        //写一个算法，判断两个String是否为子序列
+        //dp[i] 为以i为下标的单词能构成的最长词链长度
+        //对于每一个dp[i]，枚举dp[j] 如果words[i]和words[j]满足词链关系
+        //dp[i] = dj[j] + 1，对于每一个i，dp[i] = max(dp[i], dp[j]) + 1);
+        //返回dp[wordsLen - 1];
+        Arrays.sort(words, (a, b) -> a.length() - b.length());
+        int n = words.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (judgeWords(words[j], words[i])) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        return Arrays.stream(dp).max().getAsInt();
+    }
 
-
-
+    public static boolean judgeWords(String s1, String s2) {
+        //默认s2长度大于s1, 判断s1是否为s2的子序列
+        int m = s1.length(), n = s2.length();
+        int i = 0, j = 0;
+        while (i < m && j < n) {
+            if (s1.charAt(i) == s2.charAt(j)) {
+                i++;
+            }
+            j++;
+        }
+        return i == m;
+    }
 
 
     public static void main(String[] args) {
-        System.out.println(toBinary(0));
+
     }
 }
