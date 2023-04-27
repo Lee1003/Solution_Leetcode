@@ -337,7 +337,7 @@ public class Week5 {
     }
 
     //1048. 最长字符串链
-    public int longestStrChain(String[] words) {
+    public static int longestStrChain(String[] words) {
         //将words数组中的单词按照长度从短到长排序
         //写一个算法，判断两个String是否为子序列
         //dp[i] 为以i为下标的单词能构成的最长词链长度
@@ -355,11 +355,14 @@ public class Week5 {
                 }
             }
         }
+        for (int i : dp) {
+            System.out.print(i + "  ");
+        }
         return Arrays.stream(dp).max().getAsInt();
     }
 
     public static boolean judgeWords(String s1, String s2) {
-        //默认s2长度大于s1, 判断s1是否为s2的子序列
+        //默认s2长度大于s1, 判断s1是否为s2的子序列，同时满足s2的长度要是s1+1
         int m = s1.length(), n = s2.length();
         int i = 0, j = 0;
         while (i < m && j < n) {
@@ -368,7 +371,7 @@ public class Week5 {
             }
             j++;
         }
-        return i == m;
+        return i == m && s1.length() + 1 == s2.length();
     }
 
     //3. 无重复字符的最长子串
@@ -390,16 +393,31 @@ public class Week5 {
     }
 
 
+    //1004. 最大连续1的个数 III
+    public int longestOnes(int[] nums, int k) {
+        //统计窗口内0的个数，则问题转换成cnt0<=k的情况下，窗口大小的最大值
+        int ans = 0, cnt0 = 0, left = 0;
+        int n = nums.length;
+        for (int right = 0; right < n; right++) {
+            if (nums[right] == 0) {
+                cnt0++;
+            }
+            while (cnt0 > k) {
+                if (nums[left] == 0) {
+                    cnt0--;
+                }
+                left++;
+            }
+            ans = Math.max(ans, right - left + 1);
+        }
+        return ans;
+    }
+
 
 
     public static void main(String[] args) {
-        Set<Integer> set = new HashSet<>();
-        set.add(1);
-        set.add(2);
-        set.add(3);
+        String[] strs = new String[]{"a","b","ba","abc","abd","bdca"};
+        System.out.println(longestStrChain(strs));
 
-
-        set.remove(2);
-        System.out.println(set);
     }
 }
