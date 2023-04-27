@@ -414,6 +414,35 @@ public class Week5 {
     }
 
 
+    //1234. 替换子串得到平衡字符串
+    public int balancedString(String s) {
+        //m = n/4 如果待替换子串的任意字符出现次数不大于m，那么可以通过替换子串，满足题目条件
+        //同向双指针/滑动窗口
+        char[] cs = s.toCharArray();
+        int n = cs.length;
+        int left = 0, ans = n;
+        int m = n / 4;
+        int[] cnt = new int['X'];
+        for (char c : cs) {
+            cnt[c]++;
+        }
+        if (cnt['Q'] == m && cnt['W'] == m && cnt['E'] == m && cnt['R'] == m) {
+
+            return 0;
+        }
+        for (int right = 0; right < n; right++) {
+            System.out.println("yes");
+            cnt[s.charAt(right)]--;
+            while (cnt['Q'] <= m && cnt['W'] <= m && cnt['E'] <= m && cnt['R'] <= m) {
+                ans = Math.min(ans, right - left + 1);
+                cnt[s.charAt(left)]++;
+                left++;
+            }
+        }
+        return ans;
+    }
+
+
 
     public static void main(String[] args) {
         String[] strs = new String[]{"a","b","ba","abc","abd","bdca"};
