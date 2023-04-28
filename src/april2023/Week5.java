@@ -489,8 +489,29 @@ public class Week5 {
         return ans;
     }
 
-
-
+    //1033. 移动石子直到连续
+    public int[] numMovesStones(int a, int b, int c) {
+        //abc按照从小到大排序，计算ab，bc的空隙，取最小值，讨论最小值可以得到执行的最小移动次数
+        int[] locations = new int[3];
+        locations[0] = a;
+        locations[1] = b;
+        locations[2] = c;
+        Arrays.sort(locations);
+        int distance1 = locations[1] - locations[0] - 1;
+        int distance2 = locations[2] - locations[1] - 1;
+        int[] ans = new int[2];
+        if (Math.min(distance1, distance2) == 0) {
+            if (distance1 != distance2) {
+                ans[0] = 1;
+            }
+        } else if (Math.min(distance1, distance2) == 1) {
+            ans[0] = 1;
+        } else {
+            ans[0] = 2;
+        }
+        ans[1] = distance1 + distance2;
+        return ans;
+    }
 
 
 
