@@ -427,7 +427,6 @@ public class Week5 {
             cnt[c]++;
         }
         if (cnt['Q'] == m && cnt['W'] == m && cnt['E'] == m && cnt['R'] == m) {
-
             return 0;
         }
         for (int right = 0; right < n; right++) {
@@ -443,10 +442,35 @@ public class Week5 {
     }
 
 
+    //TODO 1172. 餐盘栈
+
+    //1658. 将 x 减到 0 的最小操作数
+    public static int minOperations(int[] nums, int x) {
+        //在nums找到最长的子数组，使得子数组的和为sum-x，结果就是nums长度减去最长子数组长度
+        int target = Arrays.stream(nums).sum() - x;
+        if (target < 0) { //全部取出来也满足不了条件，直接返回-1
+            return -1;
+        }
+        int ans = -1, left = 0, sum = 0, n = nums.length;
+        for (int right = 0; right < n; right++) {
+            sum += nums[right];
+            while (sum > target) {
+                sum -= nums[left];
+                left++;
+            }
+            if (sum == target) {
+                ans = Math.max(ans, right - left + 1);
+            }
+        }
+        return ans < 0 ? -1 : n - ans;
+
+    }
+
+
 
     public static void main(String[] args) {
-        String[] strs = new String[]{"a","b","ba","abc","abd","bdca"};
-        System.out.println(longestStrChain(strs));
+        int[] nums = new int[]{5,2,3,1,1};
+        System.out.println(minOperations(nums,5));
 
     }
 }
