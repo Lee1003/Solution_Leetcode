@@ -463,7 +463,54 @@ public class Week5 {
             }
         }
         return ans < 0 ? -1 : n - ans;
+    }
 
+
+    //1574. 删除最短的子数组使剩余数组有序
+    public static int findLengthOfShortestSubarray(int[] arr) {
+        int n = arr.length;
+        int right = n - 1;
+        //right最小为非递减后缀的起始位置
+        while (right > 0 && arr[right - 1] <= arr[right]) {
+            right--;
+        }
+        if (right == 0) { //此时arr已经是非递减数组，不需要删除任何子数组
+            return 0;
+        }
+        int ans = right; //删除 0-right-1
+        for (int left = 0; left == 0 || arr[left - 1] <= arr[left]; left++) { //left必须要是非递减
+            //对于每一个left，如果left>right 向右移动右端点直到满足条件为止
+            while (right < n && arr[right] < arr[left]) {
+                right++;
+            }
+            //此时arr[left] <= arr[right]，保证删除子数组以后是严格非递减数组，从left+1 到 right-1可以删除
+            ans = Math.min(ans, right - left - 1);
+        }
+        return ans;
+    }
+
+    //1033. 移动石子直到连续
+    public int[] numMovesStones(int a, int b, int c) {
+        //abc按照从小到大排序，计算ab，bc的空隙，取最小值，讨论最小值可以得到执行的最小移动次数
+        int[] locations = new int[3];
+        locations[0] = a;
+        locations[1] = b;
+        locations[2] = c;
+        Arrays.sort(locations);
+        int distance1 = locations[1] - locations[0] - 1;
+        int distance2 = locations[2] - locations[1] - 1;
+        int[] ans = new int[2];
+        if (Math.min(distance1, distance2) == 0) {
+            if (distance1 != distance2) {
+                ans[0] = 1;
+            }
+        } else if (Math.min(distance1, distance2) == 1) {
+            ans[0] = 1;
+        } else {
+            ans[0] = 2;
+        }
+        ans[1] = distance1 + distance2;
+        return ans;
     }
 
 
