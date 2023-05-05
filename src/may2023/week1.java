@@ -1,9 +1,6 @@
 package may2023;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class week1 {
 
@@ -51,6 +48,37 @@ public class week1 {
     }
 
 
+    //2432. 处理用时最长的那个任务的员工
+    public int hardestWorker(int n, int[][] logs) {
+//        List<Integer> list = new ArrayList<>();
+//        list.add(logs[0][1]);
+//        for (int i = 1; i < logs.length; i++) {
+//            list.add(logs[i][1] - logs[i-1][1]);
+//        }
+//        for (int i = 1; i < logs.length; i++) {
+//            logs[i][1] = list.get(i);
+//        }
+//        Collections.sort(list);
+//        int temp = list.get(list.size()-1);
+//        List<Integer> ans = new ArrayList<>();
+//        for (int[] log : logs) {
+//            if (log[1] == temp) {
+//                ans.add(log[0]);
+//            }
+//        }
+//        Collections.sort(ans);
+//        return ans.get(0);
+        int ans = logs[0][0]; int maxCost = logs[0][1];
+        for (int i = 1; i < logs.length; i++) {
+            int index = logs[i][0];
+            int cost = logs[i][1] - logs[i-1][1];
+            if (cost > maxCost || (cost == maxCost && index < ans)) {
+                maxCost = cost;
+                ans = index;
+            }
+        }
+        return ans;
+    }
 
     public static void main(String[] args) {
         System.out.println(powerfulIntegers(1, 1, 10));
