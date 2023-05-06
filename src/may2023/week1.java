@@ -216,8 +216,45 @@ public class week1 {
     }
 
 
+    //1763. 最长的美好子字符串
+    public static String longestNiceSubstring(String s) {
+        //暴力枚举，找到每一个子串并且判断是不是美好字符串
+        int n = s.length();
+        String ans = "";
+        int maxLen = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n + 1; j++) {
+                String sub = s.substring(i, j);
+                if (isNice(sub) && sub.length() > maxLen) {
+                    maxLen = sub.length();
+                    ans = sub;
+                }
+            }
+        }
+        return ans;
+    }
+
+    public static boolean isNice(String s) {
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if (Character.isUpperCase(c)) {
+                if (s.indexOf(Character.toLowerCase(c)) == -1) {
+                    return false;
+                }
+            } else {
+                if (s.indexOf(Character.toUpperCase(c)) == -1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     public static void main(String[] args) {
-        char c = 'b';
-        System.out.println(c - 'a');
+        String s = "YazaAay";
+        System.out.println(longestNiceSubstring(s));
+
     }
 }
