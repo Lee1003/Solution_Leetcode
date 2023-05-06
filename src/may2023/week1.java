@@ -149,6 +149,38 @@ public class week1 {
         return false;
     }
 
+
+    //438. 找到字符串中所有字母异位词
+    public List<Integer> findAnagrams(String s, String p) {
+        //滑动窗口
+        int m = s.length();
+        int n = p.length();
+        if (n > m) {
+            return new ArrayList<>();
+        }
+        int[] cntS = new int[26];
+        int[] cntP = new int[26];
+        List<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            cntS[s.charAt(i) - 'a']++;
+            cntP[p.charAt(i) - 'a']++;
+        }
+        if (Arrays.equals(cntS, cntP)) {
+            ans.add(0);
+        }
+        for (int i = n; i < m; i++) {
+            cntS[s.charAt(i) - 'a']++;
+            cntS[s.charAt(i - n) - 'a']--;
+            if (Arrays.equals(cntP,cntS)) {
+                ans.add(i - n + 1);
+            }
+        }
+        return ans;
+    }
+
+
+
+
     public static void main(String[] args) {
         char c = 'b';
         System.out.println(c - 'a');
