@@ -1,5 +1,6 @@
 package may2023;
 
+import javax.xml.ws.spi.http.HttpHandler;
 import java.util.*;
 
 public class week1 {
@@ -179,6 +180,40 @@ public class week1 {
     }
 
 
+    //1010. 总持续时间可被 60 整除的歌曲
+    public int numPairsDivisibleBy60(int[] time) {
+        //暴力On2过不了
+//        int count = 0;
+//        int n = time.length;
+//        for (int i = 0; i < n - 1; i++) {
+//            for (int j = i + 1; j < n; j++) {
+//                if ((time[i] + time[j]) % 60 == 0) {
+//                    count++;
+//                }
+//            }
+//        }
+//        return count;
+        //哈希表加速计算
+        int count = 0;
+        int n = time.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            time[i] = time[i] % 60;
+        }
+        for (int i = 0; i < n; i++) {
+            if (time[i] == 0) {
+                if (map.containsKey(0)) {
+                    count += map.get(0);
+                }
+            } else {
+                if (map.containsKey(60 - time[i])) {
+                    count += map.get(60 - time[i]);
+                }
+            }
+            map.put(time[i], map.getOrDefault(time[i], 0) + 1);
+        }
+        return count;
+    }
 
 
     public static void main(String[] args) {
