@@ -34,6 +34,10 @@ public class week1 {
     }
 
 
+    //TODO 1376. 通知所有员工所需的时间
+
+    //TODO 2106. 摘水果
+
     //1003. 检查替换后的词是否有效
     public boolean isValid(String s) {
         StringBuilder stk = new StringBuilder();
@@ -76,6 +80,43 @@ public class week1 {
                 maxCost = cost;
                 ans = index;
             }
+        }
+        return ans;
+    }
+
+    //1419. 数青蛙
+    public int minNumberOfFrogs(String croakOfFrogs) {
+        int ans = 0;
+        int c = 0, r = 0, o = 0, a = 0, k = 0;
+        int n = croakOfFrogs.length();
+        for (int i = 0; i < n; i++) {
+            char fc = croakOfFrogs.charAt(i);
+            if (fc == 'c') {
+                if (k > 0) {
+                    k--;
+                } else {
+                    ans++;
+                }
+                c++;
+            } else if (fc == 'r') {
+                c--;
+                r++;
+            } else if (fc == 'o') {
+                r--;
+                o++;
+            } else if (fc == 'a') {
+                o--;
+                a++;
+            } else if (fc == 'k') {
+                a--;
+                k++;
+            }
+            if (c < 0 || r < 0 || o < 0 || a < 0) {
+                break;
+            }
+        }
+        if (c != 0 || r != 0 || o != 0 || a != 0) {
+            return -1;
         }
         return ans;
     }
