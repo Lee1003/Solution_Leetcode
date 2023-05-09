@@ -514,10 +514,35 @@ public class Week5 {
     }
 
 
+    //2423. 删除字符使频率相同
+    public static boolean equalFrequency(String word) {
+        int n = word.length();
+        loop:for (int i = 0; i < n; i++) {
+            Map<Character, Integer> map = new HashMap<>();
+            int freq = 0;
+            for (int j = 0; j < n; j++) {
+                if (j != i) {
+                    map.put(word.charAt(j), map.getOrDefault(word.charAt(j), 0) + 1);
+                    freq = map.get(word.charAt(j));
+                }
+            }
+            for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+                int value = entry.getValue();
+                System.out.println(value);
+                if (value != freq) {
+                    continue loop;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+
 
     public static void main(String[] args) {
-        int[] nums = new int[]{5,2,3,1,1};
-        System.out.println(minOperations(nums,5));
+        String word = "ddaccb";
+        System.out.println(equalFrequency(word));
 
     }
 }
