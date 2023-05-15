@@ -57,8 +57,19 @@ public class week2 {
     }
 
 
-
-
+    //2441. 与对应负数同时存在的最大正整数
+    public int findMaxK(int[] nums) {
+        //哈希加速计算
+        Set<Integer> set = new HashSet<>();
+        int ans = -1;
+        for (int num : nums) {
+            if (set.contains(-num)) {
+                ans = Math.max(ans, Math.max(num, -num));
+            }
+            set.add(num);
+        }
+        return ans;
+    }
 
 
 
