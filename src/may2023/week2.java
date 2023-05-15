@@ -1,6 +1,8 @@
 package may2023;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class week2 {
@@ -67,6 +69,32 @@ public class week2 {
                 ans = Math.max(ans, Math.max(num, -num));
             }
             set.add(num);
+        }
+        return ans;
+    }
+
+
+    //1072. 按列翻转得到最大值等行数
+    public int maxEqualRowsAfterFlips(int[][] matrix) {
+        //翻转数组中的某几列，翻转后，求行与行之间所有值都相等的最大行数
+        //两行之间元素全部相同或者相反，称为等价行
+        //遍历矩阵每一行，如果开头第一个数字是0，保持当前行不变，如果是1，翻转这一行
+        //用哈希表统计翻转后每一行转换成字符串的出现频率
+        int ans = 0;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < m; i++) {
+            char[] cs = new char[n];
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < n; j++) {
+                cs[j] = (char) (matrix[i][0] ^ matrix[i][j]);
+                sb.append(cs[j]);
+            }
+            map.put(sb.toString(), map.getOrDefault(sb.toString(), 0) + 1);
+        }
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            ans = Math.max(ans, entry.getValue());
         }
         return ans;
     }
