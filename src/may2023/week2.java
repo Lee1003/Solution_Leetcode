@@ -1,9 +1,6 @@
 package may2023;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class week2 {
 
@@ -97,6 +94,36 @@ public class week2 {
             ans = Math.max(ans, entry.getValue());
         }
         return ans;
+    }
+
+    //1054. 距离相等的条形码
+    public int[] rearrangeBarcodes(int[] barcodes) {
+        //TODO lambda表达式学习，比较器学习
+        //按照数组的频率从大到小排序，如果两个数字频率相同，那么按照数字大小从小到大排序
+        //奇数偶数插入新数组，作为答案返回
+        int n = barcodes.length;
+        Integer[] t = new Integer[n];
+        int max = 0;
+        for (int i = 0; i < n; i++) {
+            t[i] = barcodes[i];
+            max = Math.max(max, barcodes[i]);
+        }
+        int[] cnt = new int[max + 1];
+        for (int num : barcodes) {
+            cnt[num]++;
+        }
+        Arrays.sort(t, (a, b) -> cnt[a] == cnt[b] ? b - a : cnt[b] - cnt[a]);
+        int[] res = new int[n];
+        int index = 0;
+        for (int i = 0; i < n; i += 2) {
+            res[i] = t[index];
+            index++;
+        }
+        for (int i = 1; i < n; i += 2) {
+            res[i] = t[index];
+            index++;
+        }
+        return res;
     }
 
 
