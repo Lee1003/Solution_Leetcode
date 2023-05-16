@@ -1,5 +1,7 @@
 package may2023;
 
+import java.util.Arrays;
+
 public class week3 {
 
     //2446. 判断两个事件是否存在冲突
@@ -18,6 +20,34 @@ public class week3 {
     public static int hourToMin(String str) {
         return Integer.parseInt(str.substring(0,2)) * 60 + Integer.parseInt(str.substring(3,5));
     }
+
+
+    //TODO 1335. 工作计划的最低难度
+    public int minDifficulty(int[] jobDifficulty, int d) {
+        int n = jobDifficulty.length;
+        if (n < d) {
+            return -1;
+        }
+        //
+        return 1;
+    }
+
+
+    //413. 等差数列划分
+    public int numberOfArithmeticSlices(int[] nums) {
+        //dp[i]表示以i结尾的等差子数组的个数
+        //结果返回sum(dp[])
+        int n = nums.length;
+        int[] dp = new int[n];
+        for (int i = 2; i < n; i++) {
+            if ((nums[i] - nums[i - 1]) == (nums[i - 1] - nums[i - 2])) {
+                dp[i] = dp[i - 1] + 1;
+            }
+        }
+        return Arrays.stream(dp).sum();
+    }
+
+
 
 
     public static void main(String[] args) {
