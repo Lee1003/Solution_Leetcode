@@ -48,12 +48,28 @@ public class week3 {
     }
 
 
+    //718. 最长重复子数组
+    public int findLength(int[] nums1, int[] nums2) {
+        //dp[i][j]表示nums1以i为结尾的子数组和nums2以j为结尾的子数组的，公共子数组的长度
+        int m = nums1.length;
+        int n = nums2.length;
+        int maxLen = 0;
+        int[][] dp = new int[m][n];
+        dp[0][0] = nums1[0] == nums2[0] ? 1 : 0;
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (nums1[i] == nums2[j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    maxLen = Math.max(maxLen, dp[i][j]);
+                }
+            }
+        }
+        return maxLen;
+    }
+
 
 
     public static void main(String[] args) {
-        String str = "02:00";
-        System.out.println(Integer.parseInt(str.substring(0,2)));
-        System.out.println(Integer.parseInt(str.substring(3,5)));
-        System.out.println(hourToMin(str));
+        System.out.println(7 % -2);
     }
 }
