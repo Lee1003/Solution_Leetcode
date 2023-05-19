@@ -277,8 +277,10 @@ public class Week2 {
 
         StringBuilder ans = new StringBuilder();
         while(n != 0){
+            System.out.println("yes");
             int remainder = n % -2; //商
             n /= -2;
+            System.out.println(n);
             if(remainder < 0){
                 ans.append(-remainder);
                 n += 1;
@@ -708,7 +710,7 @@ public class Week2 {
         return ans;
     }
     public static void main(String[] args) {
-
+        System.out.println(baseNeg2(-1));
 
     }
 }

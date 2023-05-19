@@ -68,8 +68,41 @@ public class week3 {
     }
 
 
+    public static int[] addNegabinary(int[] arr1, int[] arr2) {
+        int m = arr1.length;
+        int n = arr2.length;
+        int num1 = 0, num2 = 0;
+        for (int i = 0; i < m; i++) {
+            num1 += arr1[i] == 1 ? Math.pow(-2, m - i -  1) : 0;
+        }
+        for (int i = 0; i < n; i++) {
+            num2 += arr2[i] == 1 ? Math.pow(-2, n - i - 1) : 0;
+        }
+        int num = num1 + num2;
+        if (num == 1 || num == 0) {
+            return new int[]{num};
+        }
+        StringBuilder sb = new StringBuilder();
+        while (num != 0) {
+            int remainder = num & 1;
+            sb.append(remainder);
+            num -= remainder;
+            num /= -2;
+        }
+        char[] cs = sb.reverse().toString().toCharArray();
+        int[] ans = new int[cs.length];
+        for (int i = 0; i < ans.length; i++) {
+            ans[i] = Character.getNumericValue(cs[i]);
+        }
+        return ans;
+    }
+
+
+
 
     public static void main(String[] args) {
-        System.out.println(7 % -2);
+        int[] nums1 = new int[]{0};
+        int[] nums2 = new int[]{1,1};
+        addNegabinary(nums1, nums2);
     }
 }
