@@ -225,7 +225,53 @@ public class Week2 {
         return ans;
     }
 
+
+
+    //1281. 整数的各位积和之差
+    public static int subtractProductAndSum(int n) {
+//        String str = String.valueOf(n);
+//        int mul = 1;
+//        int sum = 0;
+//        for (char c : str.toCharArray()) {
+//            mul *= c - '0';
+//            sum += c - '0';
+//        }
+//        return mul - sum;
+
+        int mul = 1;
+        int sum = 0;
+        while (n != 0) {
+            int x = n % 10;
+            mul *= x;
+            sum += x;
+            n /= 10;
+        }
+        return mul - sum;
+
+    }
+
+
+    //611. 有效三角形的个数
+    public static int triangleNumber(int[] nums) {
+        Arrays.sort(nums);
+        int ans = 0;
+        int len = nums.length;
+        for (int i = len - 1; i >= 2; i--) {
+            int left = 0, right = i - 1;
+            while (left < right) {
+                if (nums[left] + nums[right] > nums[i]) {
+                    ans += right - left;
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
-        System.out.println(fourSum(new int[]{0,0,0,-1000000000,-1000000000,-1000000000,-1000000000}, -1000000000));
+        int[] nums = new int[]{4, 2, 3, 4};
+        System.out.println(triangleNumber(nums));
     }
 }
