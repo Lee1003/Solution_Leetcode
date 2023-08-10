@@ -270,6 +270,59 @@ public class Week2 {
         return ans;
     }
 
+
+    //1289.下降路径最小和 II
+    public int minFallingPathSum(int[][] grid) {
+        int n = grid.length;
+        int[][] dp = new int[n][n];
+        //初始化
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        //第一行dp数值填充
+        for (int i = 0; i < n; i++) {
+            dp[0][i] = grid[0][i];
+        }
+        //dp二维数组赋值
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    if (j == k) {
+                        continue;
+                    }
+                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][k] + grid[i][j]); //当前dp[i][j]为前一行的每个元素所对应的最小值（k和j不能相等）加上当前的grid[i][j]值
+                }
+            }
+        }
+        //遍历dp数组最后一行取出最小值
+        int res = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            res = Math.min(res, dp[n - 1][i]);
+        }
+        return res;
+    }
+
+
+    //11. 盛最多水的容器
+    public static int maxArea(int[] height) {
+        int res = 0;
+        int left = 0;
+        int right = height.length - 1;
+        //双指针，木桶的宽度始终在减少，盛水的量取决于短的木头，比较两端木头的长度，哪一个短，就把对应的指针向内移动
+        while (left < right) {
+            res = Math.max(res, Math.min(height[left], height[right]) * (right - left));
+            if (height[left] >= height[right]) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
         int[] nums = new int[]{4, 2, 3, 4};
         System.out.println(triangleNumber(nums));
