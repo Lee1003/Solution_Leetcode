@@ -338,8 +338,84 @@ public class Week2 {
     }
 
 
+    //42. 接雨水
+    public int trap(int[] height) {
+        int n = height.length;
+        int sum = 0;
+        int[] preMax = new int[n];
+        int[] sufMax = new int[n];
+        preMax[0] = height[0];
+        sufMax[n - 1] = height[n - 1];
+
+        //计算前缀最大值
+        for (int i = 1; i < n; i++) {
+            preMax[i] = Math.max(preMax[i - 1], height[i]);
+        }
+        //计算后缀最大值
+        for (int i = n - 2; i >= 0; i--) {
+            sufMax[i] = Math.max(sufMax[i + 1], height[i]);
+        }
+
+        //对于当前height数组元素，对应位置的前缀最大值与后缀最大值的min，减去相应位置的height[i],即为该位置可以装雨水的量
+        for (int i = 0; i < n; i++) {
+            sum += Math.min(preMax[i], sufMax[i]) - height[i];
+        }
+
+        return sum;
+    }
 
 
+    //34. 在排序数组中查找元素的第一个和最后一个位置
+    public static int[] searchRange(int[] nums, int target) {
+        int start = lowerBound1(nums, target);
+        if (start == nums.length || nums[start] != target) {
+            return new int[]{-1, -1};
+        }
+        int end = lowerBound1(nums, target + 1) - 1;
+        return new int[]{start, end};
+    }
+
+    public static int lowerBound1(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0, right = n - 1; //闭区间
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] >= target) { //右指针左移
+                right = mid - 1;
+            } else { //左指针右移
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+
+    public static int lowerBound2(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0, right = n; //左闭右开区间
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] >= target) { //右指针左移
+                right = mid - 1;
+            } else { //左指针右移
+                left = mid;
+            }
+        }
+        return left;
+    }
+
+    public static int lowerBound3(int[] nums, int target) {
+        int n = nums.length;
+        int left = -1, right = n; //开区间
+        while (left + 1 < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] >= target) { //右指针左移
+                right = mid;
+            } else { //左指针右移
+                left = mid;
+            }
+        }
+        return left;
+    }
 
 
     public static void main(String[] args) {
