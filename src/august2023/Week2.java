@@ -418,6 +418,16 @@ public class Week2 {
     }
 
 
+    //88. 合并两个有序数组
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        for (int i = m; i < nums1.length; i++) {
+            nums1[i] = nums2[i - m];
+        }
+
+        Arrays.sort(nums1);
+    }
+
+
     public static void main(String[] args) {
         int[] nums = new int[]{4, 2, 3, 4};
         System.out.println(triangleNumber(nums));
